@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c71b5336ecc34beba5731340e13e0e43" Name="Diagram1" ZoomLevel="58">
+        <EntityTypeShape EntityType="Model.Application" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Membership" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Profile" Width="1.5" PointX="7.5" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Role" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.UsersOpenAuthAccount" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.UsersOpenAuthData" Width="1.5" PointX="5.75" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="Model.MembershipApplication" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.RoleApplication" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.UserApplication" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.MembershipUser" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.UserProfile" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.OpenAuthAccount_UserData" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.UsersInRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.userTable" Width="1.5" PointX="5.625" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Statistics" Width="1.5" PointX="12.625" PointY="4" />
+        <AssociationConnector Association="Model.UsersOpenAuthAccountStatistics" />
+        <EntityTypeShape EntityType="Model.Locations" Width="1.5" PointX="12.625" PointY="6.625" />
+        <AssociationConnector Association="Model.UsersOpenAuthAccountLocations" />
+        <EntityTypeShape EntityType="Model.Login" Width="1.5" PointX="12.625" PointY="0.75" />
+        <AssociationConnector Association="Model.UsersOpenAuthAccountLogin" />
+        <EntityTypeShape EntityType="Model.UsersOpenAuthAccount1" Width="1.5" PointX="10.375" PointY="5" />
+        <AssociationConnector Association="Model.UsersOpenAuthAccountStatistics1" />
+        <AssociationConnector Association="Model.UsersOpenAuthAccountLocations1" />
+        <AssociationConnector Association="Model.UsersOpenAuthAccountLogin1" />
+        <EntityTypeShape EntityType="Model.Statistics1" Width="1.5" PointX="20.25" PointY="3.75" />
+        <EntityTypeShape EntityType="Model.Locations1" Width="1.5" PointX="20.25" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.Login1" Width="1.5" PointX="20.25" PointY="6.875" />
+        <EntityTypeShape EntityType="Model.UsersOpenAuthAccount2" Width="1.5" PointX="18" PointY="3.875" />
+        <AssociationConnector Association="Model.UsersOpenAuthAccountStatistics2" />
+        <AssociationConnector Association="Model.UsersOpenAuthAccountLocations2" />
+        <AssociationConnector Association="Model.UsersOpenAuthAccountLogin2" />
+      </Diagram>
+      <Diagram DiagramId="151492ab8f664cdcbdbc62a6734076e5" Name="Diagram2" >
+        <EntityTypeShape EntityType="Model.Statistics" Width="1.5" PointX="3.25" PointY="1.125" />
+        <EntityTypeShape EntityType="Model.Locations" Width="1.5" PointX="5.125" PointY="1.375" />
+        <EntityTypeShape EntityType="Model.Login" Width="1.5" PointX="7" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.UsersOpenAuthAccount" Width="1.5" PointX="3.25" PointY="3.25" IsExpanded="true" />
+        <AssociationConnector Association="Model.UsersOpenAuthAccountStatistics" />
+        <AssociationConnector Association="Model.UsersOpenAuthAccountLocations" />
+        <AssociationConnector Association="Model.UsersOpenAuthAccountLogin" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

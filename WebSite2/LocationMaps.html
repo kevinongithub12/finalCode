@@ -1,0 +1,452 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title> Location: </title>
+    <style type="text/css">
+      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+        #tableControls {
+            width: 886px;
+        }
+        h1 { 
+            display: block;
+            font-size: 3em;
+            margin-top: 0.67em;
+            margin-bottom: 0.67em;
+            margin-left: 4em;
+            margin-right: 0.97em;
+            font-weight: bold;
+            max-width: 100% !important;
+            margin: 0 auto;
+          }
+
+        body {
+          background: #ccc;
+        }
+        section {
+          margin: 0 auto;
+          width: 25rem;
+          background: inherit;
+          padding: 5px;
+        }
+        h2 {
+          background: black;
+          box-shadow: -25rem 0 0 black, 25rem 0 0 black;   /* x offset == element width */
+          color:#c8c8c8;
+        }
+
+        .auto-style1 {
+            height: 35px;
+        }
+        
+
+    </style>
+
+   <script src="//www.parsecdn.com/js/parse-1.3.1.min.js"></script>
+   <script type="text/javascript" src="Scripts/jquery-1.8.2.min.js"></script>
+    <script src="Scripts/jquery-2.1.1.min.js"></script>
+    <script src="Scripts/jquery-2.1.1.js"></script>
+   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCojTqk2CdC0CgMB3lQv4LuiUPadh6qFe4"></script>
+     <script>
+    //Initialize parameters with RaceTracker's unique Identifiers    
+    appID = "fKnBZJbUYPNfV5BgcPGPAFhem5Y6Xpp5mZPkJ9fk";
+    restKey = "GUYeo7lR7nVm81iMlTlxOzyF5mVc3xZbtVI9zWBD";
+
+
+    Parse.initialize(appID, restKey); //initialize parse
+    var callback_user_model_loc;
+    var mapoptionsssss;
+    var raceType;
+
+    window.fbAsyncInit = function () {                              //initialize FB Login
+        Parse.FacebookUtils.init({ // this line replaces FB.init({
+            appId: '714038725351814', // Facebook App ID
+            status: true, // check Facebook Login status
+            cookie: true, // enable cookies to allow Parse to access the session
+            xfbml: true,
+            version: 'v2.1'//Uses the correct version of the SDK
+        });
+
+        // Run code after the Facebook SDK is loaded.
+    };
+
+    (function (d, s, id) {                      //facebook sdk callback
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    //end intiitalization
+    getCurrentUserData();   //after  FB  On_Success callback, get user data.d response!!
+
+
+
+    //get real current user Object
+    function getCurrentUserData() {
+        var currentUser = Parse.User.current();
+
+        //if (currentUser == null && !localStorage.get("CurrUserName") {                         //if user == (!isAuthenticated), redirect em to login page
+        //    alert("Erorr, user not authenticated!");
+        //    window.location.replace("~/Login.aspx"); 
+            
+        //}
+        //else if (!currentUser.get("location")) {
+
+        //}
+        //else {                          //print Logged in User current geogaphic location
+        //    console.log("The current geographic location of Logged in User is \br"
+        //             + "latitude: " + currentUser.get("location").latitude
+        //             + "longitude:" + currentUser.get("location").longitude
+        //          );   
+        //}
+
+        //create all other users
+        var user2 = new Parse.User();// their values are to the cloud server*/
+        user2.set("username", "bobby");
+        user2.set("password", "pass");
+       
+
+        var user3 = new Parse.User();// their values are to the cloud server*/
+        user3.set("username", "james");
+        user3.set("password", "pass");
+
+        var user4 = new Parse.User();// their values are to the cloud server*/
+        user4.set("username", "mat");
+        user4.set("password", "pass");
+
+        var user5 = new Parse.User();// their values are to the cloud server*/
+        user5.set("username", "kevin");
+        user5.set("password", "pass");
+               
+        var user6 = new Parse.User();// their values are to the cloud server*/
+        user6.set("username", "rick");
+        user6.set("password", "pass");
+
+
+        //REGION : CREATE EACH USERS GEOPOINT(LATITUDE,LONGITUDE VALUE)
+        var currentUserpoint = new Parse.GeoPoint({ latitude: 43.0, longitude: -83.0 }
+            )
+        ;
+        var userPoint2 = new Parse.GeoPoint(
+                { latitude: 42.4, longitude: -83.0 }
+            )
+        ;
+        var userPoint3 = new Parse.GeoPoint({ latitude: 44.0, longitude: -84.2 }
+            )
+        ;
+        var userPoint4 = new Parse.GeoPoint({ latitude: 45.0, longitude: -82.0 }
+            )
+        ;
+        var userPoint5 = new Parse.GeoPoint({ latitude: 43.5, longitude: -84.0 }
+            )
+        ;
+        var userPoint6 = new Parse.GeoPoint({ latitude: 43.0, longitude: -85.0 }
+            )
+        ;
+
+
+        //REGION : Create Models from  pointObjects!!!!!!!
+
+        //Model => Model.location(x,y), Model=> new {x=lat, y=long}
+        var userPointModel = new Parse.Object("PlaceObject");
+        userPointModel.set("location", currentUserpoint);
+        userPointModel.save();
+
+        //Model => Model.location(x,y), Model=> new {x=lat, y=long}                         
+        var userPointModel2 = new Parse.Object("PlaceObject");
+        userPointModel2.set("location", userPoint2);
+        userPointModel2.save();
+
+        //Model => Model.location(x,y), Model=> new {x=lat, y=long}
+        var userPointModel3 = new Parse.Object("PlaceObject");    
+        userPointModel3.set("location", userPoint3);
+        userPointModel3.save();
+
+        //Model => Model.location(x,y), Model=> new {x=lat, y=long}
+        var userPointModel4 = new Parse.Object("PlaceObject");
+        userPointModel4.set("location", userPoint4);
+        userPointModel4.save();
+
+        //Model => Model.location(x,y), Model=> new {x=lat, y=long}
+        var userPointModel5 = new Parse.Object("PlaceObject");
+        userPointModel5.set("location", userPoint5);
+        userPointModel5.save();
+
+        //Model => Model.location(x,y), Model=> new {x=lat, y=long}
+        var userPointModel6 = new Parse.Object("PlaceObject");
+        userPointModel6.set("location", userPoint6);
+        userPointModel6.save();
+
+
+        //Save  copy in local storage, session variable will be acessible in callback!!!!
+        //Datatype:item (itemKey => JSON{ [key=>value]}).val() )
+        
+        localStorage.setItem("userGeoPoint",JSON.stringify(userPointModel)
+            )
+        ;
+        localStorage.setItem("userGeoPoint2",JSON.stringify(userPointModel2)
+            )
+        ;
+        localStorage.setItem("userGeoPoint3",JSON.stringify(userPointModel3)
+            )
+        ;
+        localStorage.setItem("userGeoPoint4",JSON.stringify(userPointModel4)
+            )
+        ;
+        localStorage.setItem("userGeoPoint5",JSON.stringify(userPointModel5)
+            )
+        ;
+        localStorage.setItem("userGeoPoint6", JSON.stringify(userPointModel6)
+            )
+        ;
+
+
+        //Call cloud data save  and pass  callback function!!!!
+
+     
+        currentUser.save(null, {                        //save the point!
+            success: function () {
+                //alert("Success DAMMMIITTTT!");
+            }
+        });
+
+
+        user2.save(null, {                        //save the point!
+            success: function () {
+                //alert("Success USER2 DAMMMIITTTT!");
+            }
+        });
+
+        user3.save(null, {                        //save the point!
+            success: function () {
+                // alert("Success USER2 DAMMMIITTTT!");
+            }
+        });
+
+        user4.save(null, {                        //save the point!
+            success: function () {
+                // alert("Success USER2 DAMMMIITTTT!");
+            }
+        });
+
+        user5.save(null, {                        //save the point!
+            success: function () {
+                //  alert("Success USER5 DAMMMIITTTT!");
+            }
+        });
+
+        user6.save(null, {                        //save the point!
+            success: function () {
+                //alert("Success USER6 DAMMMIITTTT!");
+            }
+        });
+        //GET Current User Location Model to display!!!!
+          
+
+        $("#map-canvas").bind(function (){
+            $('#loader').html('<img src="Images/img/722.GIF"> loading..');
+            // run ajax request
+            jQuery.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "https://api.github.com/users/jveldboom",
+                success: function () {
+                    // replace div's content with returned data
+                    // $('#loading').html('<img src="' + d.avatar_url + '"><br>' + d.login);
+                    // setTimeout added to show loading
+                    setTimeout(function () {
+                    }, 2900);
+                },
+            });
+        });
+      
+
+
+
+        
+        function initialize() {                                 //Google Maps Intializer
+            var currentUserGeoPoint = new google.maps.LatLng(userPointModel.get(
+                   "location").latitude, userPointModel.get("location").longitude
+           )
+            ;
+
+            var userGeoPoint2 = new google.maps.LatLng(userPointModel2.get(
+                        "location").latitude, userPointModel2.get("location").longitude
+                )
+            ;
+            var userGeoPoint3 = new google.maps.LatLng(userPointModel3.get(
+                        "location").latitude, userPointModel3.get("location").longitude
+                )
+            ;
+            var userGeoPoint4 = new google.maps.LatLng(userPointModel4.get(
+                        "location").latitude, userPointModel4.get("location").longitude
+                )
+            ;
+            var userGeoPoint5 = new google.maps.LatLng(userPointModel5.get(
+                        "location").latitude, userPointModel5.get("location").longitude
+                )
+            ;
+            var userGeoPoint6 = new google.maps.LatLng(userPointModel6.get(
+                        "location").latitude, userPointModel6.get("location").longitude
+                )
+            ;
+
+                    var mapOptions = {
+                        center: currentUserGeoPoint,
+                        zoom: 8,
+                        mapTypeId: google.maps.MapTypeId.Map
+                    };
+
+                    mapoptionsssss = mapOptions;            //Assign this instance to the global variable
+
+                    var map = new google.maps.Map(document.getElementById('map-canvas'),
+                        mapOptions);
+
+                    var marker1 = new google.maps.Marker({                   //Google maps Marker1
+                        position: currentUserGeoPoint,
+                        map: map,
+                        title: "ME"
+                    });
+
+                    var marker2 = new google.maps.Marker({                   //Google maps Marker2
+                        position: userGeoPoint2,
+                        map: map,
+                        title: "Bobby"
+                    });
+
+                    var marker3 = new google.maps.Marker({                   //Google maps Marker3
+                        position: userGeoPoint3,
+                        map: map,
+                        title: "James"
+                    });
+
+                    var marker4 = new google.maps.Marker({                   //Google maps Marker4
+                        position: userGeoPoint4,
+                        map: map,
+                        title: "Mat"
+                    });
+                    var marker5 = new google.maps.Marker({                   //Google maps Marker5
+                        position: userGeoPoint5,
+                        map: map,
+                        title: "Kevin"
+                    });
+                    var marker6 = new google.maps.Marker({                   //Google maps Marker6
+                        position: userGeoPoint6,
+                        map: map,
+                        title: "Rick"
+                    });
+                   // focus(marker1);
+               
+                }
+        google.maps.event.addDomListener(window, 'load', initialize);
+       
+    }
+
+    function getDirections() {
+       
+        var rendererOptions = {
+            draggable: true
+        };
+
+        var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);;
+        var directionsService = new google.maps.DirectionsService();
+        mapoptionsssss;
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapoptionsssss);
+        directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+
+        google.maps.event.addListener(directionsDisplay, 'directions_changed', function () {
+            computeTotalDistance(directionsDisplay.getDirections());
+        });
+        raceType = drpDownRaceType.value;
+        calcRoute(directionsService, directionsDisplay, raceType);
+        //clickOnFirstDirection();
+    }
+  
+
+    function calcRoute(directionsService, directionsDisplay, raceType) {
+        var setRaceType;
+
+        //Set the Driving Mode based on the DropDown Value !!!!
+        if (raceType == "walk") {
+            setRaceType = google.maps.TravelMode.WALKING;
+        }
+        else if (raceType == "bicycle") {
+            setRaceType = google.maps.TravelMode.BICYCLING;
+        }
+        else if (raceType == "drive")
+            {
+            setRaceType = google.maps.TravelMode.DRIVING;
+        }
+
+        var request = {
+            origin: 'Michigan, NSW',
+            destination: 'Ohio, NSW',
+            waypoints: [{ location: 'Sterling Heights, NSW' }, { location: 'Broken Hill, NSW' }],
+            travelMode: setRaceType
+        };
+        directionsService.route(request, function (response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(response);
+            }
+        });
+    }
+
+    function computeTotalDistance(result) {
+        var total = 0;
+        var myroute = result.routes[0];
+        for (var i = 0; i < myroute.legs.length; i++) {
+            total += myroute.legs[i].distance.value;
+        }
+        total = total / 1000.0;
+        document.getElementById('total').innerHTML = total + ' km';
+        
+       
+    };
+
+  </script>  
+ </head>
+<body>
+    <section>
+        <table id="tableControls">
+            <tr>
+                <td colspan="3">
+                        <h2>
+                              RaceTracker
+                        </h2>
+                    <div id="loader"></div>
+                 </td>
+            </tr>
+           <tr >
+              <td style="vertical-align:top; text-align:left"  >
+                  [<a href="/"  style="font-size:medium" >Return</a>]
+              </td>
+               <td style="vertical-align:top;text-align:left">
+                    <button id ="Button1" style=" background-color:black; color:#c8c8c8; width: 117px; text-align:center; animation:ease-in-out"
+                             onclick="javascript:window.location.reload();" aria-atomic="True" aria-grabbed="false" aria-live="off">Nearby Users</button>   
+               </td>
+               <td style="vertical-align:top;text-align:left">
+                    <button id ="directionsButton" style=" background-color:black; color:#c8c8c8; width: 117px; text-align:center; animation:ease-in-out"
+                             onclick="javascript:getDirections();" aria-atomic="True" aria-grabbed="false" aria-live="off"> Directions</button>   
+               </td>
+               <td style="vertical-align:text-bottom">
+                    <select id = "drpDownRaceType">
+                        <option value="drive"> drive</option>  
+                        <option value="bicycle">bicycle</option> 
+                        <option value="walk" >walk</option>
+                    </select>
+               </td>
+           </tr>
+            
+        </table>
+    </section>
+      <div id="map-canvas" > </div> 
+    <div id="directionsPanel">
+        <span>
+            <input id="total" type="text" hidden="hidden"  />
+        </span> 
+        </div>
+  
+  </body>
+
+</html>
